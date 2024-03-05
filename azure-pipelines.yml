@@ -13,7 +13,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'  # Copy all files from the source directory
-    Contents: 'controllers'  # Include all files and folders
+    Contents: 'controllers/**'  # Include all files and folders under the controllers folder
     TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Copy to the staging directory
 
 - task: PublishBuildArtifacts@1
