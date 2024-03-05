@@ -7,6 +7,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- script: echo $(Build.SourcesDirectory)  # Add this script task to print the source directory
+  displayName: 'Print Source Directory'  # Optional display name for the task
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'  # Copy all files from the source directory
@@ -26,6 +29,4 @@ steps:
     package: '$(Build.ArtifactStagingDirectory)'  # Specify the path to your application files
     enableCustomDeployment: true
     deploymentMethod: 'auto'
-
-
 
