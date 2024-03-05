@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betting Calculator</title>
+    <style>
+        /* CSS styles go here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .title-p {
+            color: #ffc107;
+        }
+
+        .navigation ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .navigation li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .navigation li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .navigation li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add more styles for your form, tables, tabs, etc. */
+    </style>
+</head>
+<body>
+    <!-- Your HTML content goes here -->
+</body>
+</html>
+
+
+
+<header class="header">
+    <h1 class="title">The Racing <span class="title-p">P</span>uzzle</h1>
+    <nav class="navigation">
+        <ul>
+            <li><a href="racinghubhome.html">Your Racing Hub</a></li>
+            <li><a href="tracker.html">Tracker</a></li>
+            <li><a href="hrform.html" class='active'>Record</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
+            <li><a href="test.html">Testing Page</a></li>
+
+        </ul>
+    </nav>
+</header>
+
+<head>
+	<title>Betting Calculator</title>
+</head>
+<body>
+	<h1>Betting Calculator</h1>
+	<form id="myForm">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date"><br><br>
+    
+        <label for="stake">Stake:</label>
+        <input type="number" id="stake" name="stake" onchange="calculateReturn()"><br>
+    
+        <label for="odds">Odds:</label>
+        <input type="text" id="odds" name="odds" onchange="calculateReturn()"><br>
+    
+        <label for="outcome">Outcome:</label>
+        <select id="outcome" name="outcome" onchange="calculateReturn()">
+            <option value="0">Loss</option>
+            <option value="1">Win</option>
+        </select><br>
+    
+        <label for="return">Return:</label>
+        <input type="text" id="return" name="return" readonly><br>
+    
+        <button type="button" onclick="addRow()">Submit</button>
+    </form>
+    
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Stake</th>
+                <th>Odds</th>
+                <th>Outcome</th>
+                <th>Return</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    
+    
+
+
+
+
+
+<div class="tab">
+    <button class="tablinks" onclick="openMonth(event, 'January')">January</button>
+    <button class="tablinks" onclick="openMonth(event, 'February')">February</button>
+    <button class="tablinks" onclick="openMonth(event, 'March')">March</button>
+  </div>
+  
+  <div id="January" class="tabcontent">
+    <h3>January</h3>
+    <table id="JanuaryTable">
+      <!-- January table rows -->
+    </table>
+  </div>
+  
+  <div id="February" class="tabcontent">
+    <h3>February</h3>
+    <table id="FebruaryTable">
+      <!-- February table rows -->
+    </table>
+  </div>
+  
+  <div id="March" class="tabcontent">
+    <h3>March</h3>
+    <table id="MarchTable">
+      <!-- March table rows -->
+    </table>
+  </div>
+
+
+  <script>
+
+// Group table rows by month
+var tableRows = document.querySelectorAll("#resultsTable tbody tr");
+var tableRowsByMonth = {};
+for (var i = 0; i < tableRows.length; i++) {
+  var date = new Date(tableRows[i].querySelector("td:first-child").textContent);
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear();
+  var key = year + "-" + month;
+  if (!tableRowsByMonth[key]) {
+    tableRowsByMonth[key] = [];
+  }
+  tableRowsByMonth[key].push(tableRows[i]);
+}
+
+// Create tables for each month
+for (var key in tableRowsByMonth) {
+  var monthTable = document.createElement("table");
+  monthTable.id = key + "Table";
+  var monthTbody = document.createElement("tbody");
+  for (var j = 0; j < tableRowsByMonth[key].length; j++) {
+    monthTbody.appendChild(tableRowsByMonth[key][j]);
+  }
+  monthTable.appendChild(monthTbody);
+  document.getElementById(key).appendChild(monthTable);
+}
+
+// Show the first tab by default
+document.getElementsByClassName("tablinks")[0].click();
+
+// Function to show the corresponding table when a tab is clicked
+function openMonth(evt, monthName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(monthName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function calculateReturn() {
+			var stake = parseFloat(document.getElementById("stake").value);
+			var oddsInput = document.getElementById("odds").value;
+			var outcome = parseFloat(document.getElementById("outcome").value);
+			
+			var odds;
+			if (oddsInput.indexOf('/') > -1) { // check if odds are in fraction format
+				var parts = oddsInput.split('/');
+				odds = parseFloat(parts[0]) / parseFloat(parts[1]);
+			} else {
+				odds = parseFloat(oddsInput);
+			}
+
+			var total_return = stake * (odds * outcome + 1);
+			document.getElementById("return").value = total_return.toFixed(2);
+		}
+
+        function addRow() {
+    var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.rows.length);
+
+    var date = document.getElementById("date").value;
+    var stake = document.getElementById("stake").value;
+    var odds = document.getElementById("odds").value;
+    var outcome = document.getElementById("outcome").value;
+    var returnVal = document.getElementById("return").value;
+
+    var cells = [
+        newRow.insertCell(0),
+        newRow.insertCell(1),
+        newRow.insertCell(2),
+        newRow.insertCell(3),
+        newRow.insertCell(4)
+    ];
+
+    cells[0].innerHTML = date;
+    cells[1].innerHTML = stake;
+    cells[2].innerHTML = odds;
+    cells[3].innerHTML = outcome == "1" ? "Win" : "Loss";
+    cells[4].innerHTML = returnVal;
+
+    // clear the form
+    document.getElementById("myForm").reset();
+}
+
+
+
+
+
+
+
+  </script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+    <style>
+      /* Center the login page */
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      /* Style the login form */
+      form {
+        border: 1px solid black;
+        padding: 20px;
+        border-radius: 5px;
+      }
+
+      /* Style the form input fields and submit button */
+      input[type="text"],
+      input[type="password"],
+      input[type="submit"] {
+        display: block;
+        margin-bottom: 10px;
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        width: 100%;
+      }
+
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="home.html" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test SQL.js Library Loading</title>
+    <script src="https://cdn.jsdelivr.net/npm/sql.js/dist/sql-wasm.js"></script>
+</head>
+<body>
+    <script>
+        // Function to execute after SQL.js is loaded
+        async function initSQL() {
+            try {
+                // Check if SQL.js is defined
+                if (typeof SQL !== 'undefined') {
+                    // SQL.js is available, you can use it here
+                    console.log(SQL);
+
+                    // Create a new database
+                    const db = new SQL.Database();
+
+                    // Execute SQL queries, create tables, insert data, etc.
+
+                    // Export the database to an Uint8Array
+                    const binaryArray = db.export();
+                } else {
+                    console.error('SQL.js library not loaded.');
+                }
+            } catch (error) {
+                console.error('Error initializing SQL.js:', error);
+            }
+        }
+
+        // Trigger the initSQL function when the SQL.js script is fully loaded
+        document.querySelector('script[src="https://cdn.jsdelivr.net/npm/sql.js/dist/sql-wasm.js"]').addEventListener('load', initSQL);
+    </script>
+</body>
+</html>
+
+
+
+
+

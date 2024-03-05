@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The Racing Puzzle Tracker</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-l6UZkt6jNk6y25r+zRfEG/wl9GG+JGiStDBZ/5c5IwO+8lv3EoGOyCcySbLJjvwr8W3tBfdYih4d4tRJvC8WQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+
+<style>
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Form Styles */
+form {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+input[type="button"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+input[type="button"]:hover {
+    background-color: #3e8e41;
+}
+
+/* Table Styles */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+/* Container Styles */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 1200px; /* Adjust as needed */
+    margin: 20px auto;
+}
+
+.form-container,
+.table-container {
+    flex: 1;
+    margin-right: 20px;
+    padding: 20px; /* Add padding to provide space around form elements */
+}
+
+
+
+</style>
+
+
+<body>
+
+    <header class="header">
+        <h1 class="title">The Racing <span class="title-p">P</span>uzzle</h1>
+        <nav class="navigation">
+            <ul>
+                <li><a href="racinghubhome.html">Your Racing Hub</a></li>
+                <li><a href="tracker.html" class='active'>Tracker</a></li>
+                <li><a href="hrform.html">Record</a></li>
+                <li><a href="test.html">Testing Page</a></li>
+                <li class="dropdown" id="tools-dropdown">
+                        <a href="#" class="dropbtn">Tools <i class="fas fa-caret-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="calculator.html">Bet Calculator</a>
+                            <a href="#">Racecards</a>
+                            <a href="#">Results</a>
+                        </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <!-- Form to add a new horse -->
+            <form>
+                <label for="horse-name">Horse:</label>
+                <input type="text" id="horse-name" name="horse-name"><br><br>
+    
+                <label for="trainer">Trainer:</label>
+                <input type="text" id="trainer" name="trainer"><br><br>
+    
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments"></textarea><br><br>
+    
+                <button type="button" onclick="addHorse()" class="green-button">Add Horse</button>
+            </form>
+        </div>
+    
+        <div class="table-container">
+            <!-- Table to display horses -->
+            <table id="horse-table">
+                <thead>
+                    <tr>
+                        <th>Horse</th>
+                        <th>Trainer</th>
+                        <th colspan="0">Comments</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="horse-table-body">
+                    <!-- Use JavaScript to dynamically add rows to this table -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+
+
+    <script src="tracker.js"></script>
+
+    <script>
+
+
+// Load the saved data from localStorage or sessionStorage
+var storedData = localStorage.getItem("horseData") || sessionStorage.getItem("horseData");
+if (storedData) {
+    storedData = JSON.parse(storedData);
+    var table = document.getElementById("horse-table");
+    for (var i = 0; i < storedData.length; i++) {
+        var row = table.insertRow(-1);
+        var nameCell = row.insertCell(0);
+        nameCell.innerHTML = storedData[i].name;
+        var trainerCell = row.insertCell(1);
+        trainerCell.innerHTML = storedData[i].trainer;
+        var commentsCell = row.insertCell(2);
+        commentsCell.innerHTML = storedData[i].comments;
+
+        // Create the remove button and event listener
+        var removeCell = row.insertCell(3);
+        var removeButton = document.createElement("button");
+        removeButton.innerHTML = "Remove";
+        removeButton.classList.add("remove"); // Add the "remove" class to the button
+        removeButton.onclick = function() {
+            table.deleteRow(row.rowIndex);
+            saveData();
+        };
+        removeCell.appendChild(removeButton);
+    }
+}
+
+
+function addHorse() {
+    // Get form values
+    var name = document.getElementById("horse-name").value;
+    var trainer = document.getElementById("trainer").value;
+    var comments = document.getElementById("comments").value;
+
+    // Create a new row in the table
+    var table = document.getElementById("horse-table");
+    var row = table.insertRow(-1);
+
+    // Add the data to the new row
+    var nameCell = row.insertCell(0);
+    nameCell.innerHTML = name;
+    var trainerCell = row.insertCell(1);
+    trainerCell.innerHTML = trainer;
+    var commentsCell = row.insertCell(2);
+    commentsCell.innerHTML = comments;
+
+    // Create the remove button and event listener
+    var removeCell = row.insertCell(3);
+    var removeButton = document.createElement("button");
+    removeButton.innerHTML = "Remove";
+    removeButton.classList.add("remove"); // Add the "remove" class to the button
+    removeButton.onclick = function() {
+        table.deleteRow(row.rowIndex);
+        saveData();
+    };
+    removeCell.appendChild(removeButton);
+
+    // Clear the form
+    document.getElementById("horse-name").value = "";
+    document.getElementById("trainer").value = "";
+    document.getElementById("comments").value = "";
+
+    // Save the data to localStorage or sessionStorage
+    saveData();
+}
+
+
+function saveData() {
+    var table = document.getElementById("horse-table");
+    var data = [];
+    for (var i = 1; i < table.rows.length; i++) {
+        var row = table.rows[i];
+        var name = row.cells[0].innerHTML;
+        var trainer = row.cells[1].innerHTML;
+        var comments = row.cells[2].innerHTML;
+        data.push({ name: name, trainer: trainer, comments: comments });
+    }
+    var jsonData = JSON.stringify(data);
+    localStorage.setItem("horseData", jsonData);
+    sessionStorage.setItem("horseData", jsonData);
+}
+
+function clearLocalStorage() {
+    localStorage.removeItem("horseData");
+    sessionStorage.removeItem("horseData");
+    location.reload();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+            var dropdown = document.getElementById('tools-dropdown');
+            dropdown.addEventListener('click', function () {
+                dropdown.classList.toggle('active');
+            });
+        });
+
+    </script>
+    
+</body>
+
+</html>
