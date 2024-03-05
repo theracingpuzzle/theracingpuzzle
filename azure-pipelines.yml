@@ -13,7 +13,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'  # Copy all files from the source directory
-    Contents: '**'  # Include all files and folders
+    Contents: 'controllers'  # Include all files and folders
     TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Copy to the staging directory
 
 - task: PublishBuildArtifacts@1
@@ -29,4 +29,5 @@ steps:
     package: '$(Build.ArtifactStagingDirectory)'  # Specify the path to your application files
     enableCustomDeployment: true
     deploymentMethod: 'auto'
+
 
