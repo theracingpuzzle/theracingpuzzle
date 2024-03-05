@@ -16,6 +16,12 @@ steps:
     Contents: '**/*'  # Include all files and folders recursively
     TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Copy to the staging directory
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/controllers'  # Explicitly include the controllers folder
+    Contents: '**/*'  # Include all files and folders recursively
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/controllers'  # Copy to the staging directory under controllers
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Publish the files from the staging directory as build artifacts
