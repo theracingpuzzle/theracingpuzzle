@@ -28,6 +28,12 @@ steps:
     ArtifactName: 'drop'  # Name of the artifact
     publishLocation: 'Container'  # Publish to Azure Pipelines artifacts
 
+- task: Npm@1  # Example npm build task
+  displayName: 'npm install and build'
+  inputs:
+    command: 'install'  # npm command to execute
+    workingDir: '$(Build.SourcesDirectory)'  # Path to your project's directory containing package.json
+
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azure Web App Service Connection'  # Specify the name of your Azure service connection
@@ -35,6 +41,7 @@ steps:
     package: '$(Build.ArtifactStagingDirectory)'  # Specify the path to your application files
     enableCustomDeployment: true
     deploymentMethod: 'auto'
+
 
 
 
