@@ -356,7 +356,7 @@ body {
         if (isset($_SESSION['username'])) {
             // Display the username in the top right corner and a Log Out button
             echo '<li class="list-inline-item"><div class="username-label text-white">Welcome, ' . $_SESSION['username'] . '</div></li>';
-            echo '<li class="list-inline-item"><a href="index.php"><div class="logout-icon">
+            echo '<li class="list-inline-item"><a href="../index.php"><div class="logout-icon">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i> 
                     </div></a></li>';
         } else {

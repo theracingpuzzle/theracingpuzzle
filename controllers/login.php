@@ -19,8 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Database connection error
         $databaseError = true;
     } else {
-        echo "Database connected successfully!";
-        
         // Prepare SQL statement to check if the username exists
         $stmt = $db->prepare('SELECT * FROM users WHERE username = :username');
         $stmt->bindValue(':username', $username, SQLITE3_TEXT);
@@ -28,35 +26,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Execute the query
         $result = $stmt->execute();
 
-        // Inside the section where you execute the query and fetch the result
-if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    // Verify password
-    if (password_verify($password, $row['Password'])) { // Corrected column name to 'Password'
-        // Set the username in session
-        $_SESSION['username'] = $username;
+        if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+            // Verify password
+            if (password_verify($password, $row['Password'])) { // Corrected column name to 'Password'
+                // Set the username in session
+                $_SESSION['username'] = $username;
+                $_SESSION['user_id'] = $row['User_ID'];
 
-        // After successful login
-$_SESSION['user_id'] = $row['User_ID']; 
-
-
-       // Redirect to the racinghubhome
-header('Location: racinghubhome.php');
-exit(); // Ensure that script execution stops after redirection
-    } else {
-        $invalidPassword = true;
-    }
-} else {
-    $invalidUsername = true;
-}
-
+                // Redirect to the racinghubhome
+                header('Location: racinghubhome.php');
+                exit(); // Ensure that script execution stops after redirection
+            } else {
+                $invalidPassword = true;
+            }
+        } else {
+            $invalidUsername = true;
         }
 
         // Close the result set
         $stmt->close();
-        
+
         // Close the database connection
         $db->close();
     }
+}
 ?>
 
 <!DOCTYPE html>
