@@ -274,6 +274,20 @@ if(isset($_SESSION['user_id'])) {
     </div>
 </header>
 
+
+<div class="rolling-bar">
+        <ul id="rolling-content">
+            <li>CHELTENHAM FESTIVAL DAY ONE:</li>
+            <li>13:30 - Sky Bet Supreme Novices' Hurdle</li>
+            <li>14:10 - My Pension Expert Arkle Challenge Trophy Novices' Chase</li>
+            <li>14:50 - Ultima Handicap Chase</li>
+            <li>15:30 - Unibet Champion Hurdle Challenge Trophy</li>
+            <li>16:10 - Close Brothers Mares' Hurdle</li>
+            <li>16:50 - Boodles Juvenile Handicap Hurdle</li>
+            <li>17:30 - National Hunt Challenge Cup Amateur Jockeys' Novices' Chase</li>
+        </ul>
+    </div>
+
 <!-- Sidebar and Content Wrapper -->
 <div class="wrapper">
     <!-- Sidebar -->
@@ -301,6 +315,7 @@ if(isset($_SESSION['user_id'])) {
                 <i class="fas fa-trophy"></i> <!-- Icon -->
                 <span class="title">Leagues</span> <!-- Title -->
             </a>
+            
             <a href="#" class="dropdown-toggle" id="tools-dropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-tools"></i> <!-- Icon -->
@@ -312,19 +327,6 @@ if(isset($_SESSION['user_id'])) {
                 <a class="dropdown-item" href="testing.php"><i class="fas fa-cogs"></i> Testing Page</a>
             </div>
         </div>
-    </div>
-
-    <div class="rolling-bar">
-        <ul id="rolling-content">
-            <li>CHELTENHAM FESTIVAL DAY ONE:</li>
-            <li>13:30 - Sky Bet Supreme Novices' Hurdle</li>
-            <li>14:10 - My Pension Expert Arkle Challenge Trophy Novices' Chase</li>
-            <li>14:50 - Ultima Handicap Chase</li>
-            <li>15:30 - Unibet Champion Hurdle Challenge Trophy</li>
-            <li>16:10 - Close Brothers Mares' Hurdle</li>
-            <li>16:50 - Boodles Juvenile Handicap Hurdle</li>
-            <li>17:30 - National Hunt Challenge Cup Amateur Jockeys' Novices' Chase</li>
-        </ul>
     </div>
 
     <div class="container mt-4">
@@ -551,5 +553,6 @@ document.getElementById('toggleSidebar').addEventListener('click', function () {
         document.getElementById('mainContent').classList.toggle('content-collapsed');
     });
 </script>
+
 </body>
 </html>
