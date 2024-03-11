@@ -286,7 +286,51 @@ body {
     width: 100%; /* Make the footer stretch across the whole page */
 }
 
+.top-table-container {
+    margin-top: 20px;
+}
 
+.top-table-container .card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.top-table-container .card-header {
+    background-color: #26334e;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.top-table-container .card-header h3 {
+    margin: 0;
+}
+
+.top-table-container .table {
+    margin-bottom: 0;
+}
+
+.top-table-container .table thead th {
+    background-color: #26334e;
+    color: #fff;
+    border-color: #26334e;
+}
+
+.top-table-container .table tbody td {
+    border-color: #e9ecef;
+}
+
+.top-table-container .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(38, 51, 78, 0.05);
+}
+
+.top-table-container .table-striped tbody tr:nth-of-type(even) {
+    background-color: rgba(38, 51, 78, 0.1);
+}
+
+.top-table-container .table tbody tr:last-of-type td {
+    border-bottom: 2px solid #dee2e6;
+}
 
     </style>
 </head>
@@ -312,7 +356,7 @@ body {
         if (isset($_SESSION['username'])) {
             // Display the username in the top right corner and a Log Out button
             echo '<li class="list-inline-item"><div class="username-label text-white">Welcome, ' . $_SESSION['username'] . '</div></li>';
-            echo '<li class="list-inline-item"><a href="TRHhome.php"><div class="logout-icon">
+            echo '<li class="list-inline-item"><a href="index.php"><div class="logout-icon">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i> 
                     </div></a></li>';
         } else {
@@ -359,6 +403,11 @@ body {
                 <i class="fas fa-trophy"></i> <!-- Icon -->
                 <span class="title">Leagues</span> <!-- Title -->
             </a>
+            <a href="racecard.html">
+        <i class="fa-solid fa-book-open"></i> <!-- Icon -->
+        <span class="title">Racecards</span> <!-- Title -->
+    </a>
+</div>
     <a href="settings.php">
         <i class="fas fa-cog"></i> <!-- Icon -->
         <span class="title">Settings</span> <!-- Title -->
@@ -388,6 +437,7 @@ body {
             <li>16:50 - Boodles Juvenile Handicap Hurdle</li>
             <li>17:30 - National Hunt Challenge Cup Amateur Jockeys' Novices' Chase</li>
         </ul>
+    </div>
     </div>
 
     <!-- Main Content -->
@@ -472,11 +522,11 @@ body {
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <h3>Top Racecourse</h3>
-                <div class="table-responsive">
-                    <table class="table table-striped">
+    <div class="col-md-4 mb-4 top-table-container">
+    <div class="card">
+        <h3 class="card-header">Top Racecourse</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Rank</th>
@@ -505,11 +555,11 @@ body {
     </div>
 </div>
 </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <h3>Top Jockey</h3>
-                <div class="table-responsive">
-                    <table class="table table-striped">
+<div class="col-md-4 mb-4 top-table-container">
+    <div class="card">
+        <h3 class="card-header">Top Jockey</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Rank</th>
@@ -540,11 +590,11 @@ body {
             </div>
             </div>
             </div>
-            <div class="col-md-4 mb-4">
-            <div class="card">
-                <h3>Top Trainer</h3>
-                <div class="table-responsive">
-                    <table class="table table-striped">
+            <div class="col-md-4 mb-4 top-table-container">
+    <div class="card">
+        <h3 class="card-header">Top Trainer</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Rank</th>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runners Information</title>
+    <!-- Add any necessary CSS styles -->
+    <style>
+        /* CSS styles for the horse cards */
+.horse-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.horse-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.horse-card p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Style for the runners container */
+#runners-info {
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <div id="runners-info">
+        <!-- Runner information will be displayed here -->
+    </div>
+
+    <!-- Include the Axios library for making HTTP requests -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Function to fetch runner data based on race ID
+        async function fetchRunnerData(raceId) {
+            const options = {
+                method: 'GET',
+                url: `https://horse-racing.p.rapidapi.com/race/${raceId}`,
+                headers: {
+                    'X-RapidAPI-Key': '05af7738fdmshb82b9d247e55d09p1b4ffejsnd7f4175f5c9b',
+                    'X-RapidAPI-Host': 'horse-racing.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await axios.request(options);
+                console.log('Response:', response.data); // Log the response data
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+
+        // Function to display runner information
+function displayRunners(runnerData) {
+    const runnersContainer = document.getElementById('runners-info');
+    if (!runnersContainer) return; // Check if the container exists
+
+    // Clear any existing content
+    runnersContainer.innerHTML = '';
+
+    // Check if runnerData has the 'horses' property
+    if (!runnerData.horses || runnerData.horses.length === 0) {
+        // If there are no horses, display a message
+        runnersContainer.textContent = "No horses found.";
+        return;
+    }
+
+    // Iterate over the horses array and display each horse
+    runnerData.horses.forEach(horse => {
+        // Create a card element to display horse information
+        const horseCard = document.createElement('div');
+        horseCard.classList.add('horse-card');
+
+        // Populate the card with horse information
+        horseCard.innerHTML = `
+            <h3>${horse.horse}</h3>
+            <p><strong>Jockey:</strong> ${horse.jockey}</p>
+            <p><strong>Trainer:</strong> ${horse.trainer}</p>
+            <p><strong>Age:</strong> ${horse.age}</p>
+            <p><strong>Weight:</strong> ${horse.weight}</p>
+            <p><strong>Number:</strong> ${horse.number}</p>
+            <p><strong>Last Ran Days Ago:</strong> ${horse.last_ran_days_ago}</p>
+            <p><strong>Non-Runner:</strong> ${horse.non_runner}</p>
+            <p><strong>Form:</strong> ${horse.form}</p>
+            <p><strong>Position:</strong> ${horse.position}</p>
+            <p><strong>Distance Beaten:</strong> ${horse.distance_beaten}</p>
+            <p><strong>Owner:</strong> ${horse.owner}</p>
+            <p><strong>Sire:</strong> ${horse.sire}</p>
+            <p><strong>Dam:</strong> ${horse.dam}</p>
+            <p><strong>OR:</strong> ${horse.OR}</p>
+            <p><strong>SP:</strong> ${horse.sp}</p>
+            <p><strong>Odds:</strong> ${horse.odds.length > 0 ? horse.odds.join(', ') : 'N/A'}</p>
+        `;
+
+        // Append the horse card to the runners info container
+        runnersContainer.appendChild(horseCard);
+    });
+}
+
+        // Function to initialize the page
+        async function initializePage() {
+            // Extract the race ID from the query parameter in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const raceId = urlParams.get('raceId');
+
+            // Check if the runner data is already stored in local storage
+            const storedRunnerData = localStorage.getItem(`runnerData_${raceId}`);
+            if (storedRunnerData) {
+                // Parse the stored data and display it
+                const runnerData = JSON.parse(storedRunnerData);
+                displayRunners(runnerData);
+            } else {
+                // Fetch runner data based on the race ID
+                const runnerData = await fetchRunnerData(raceId);
+                console.log('Runner data:', runnerData); // Log the runner data
+
+                if (runnerData) {
+                    // Save the fetched runner data in local storage
+                    localStorage.setItem(`runnerData_${raceId}`, JSON.stringify(runnerData));
+                    // Display the fetched runner data
+                    displayRunners(runnerData);
+                }
+            }
+        }
+
+        // Call the initializePage function when the page loads
+        window.onload = initializePage;
+    </script>
+</body>
+</html>

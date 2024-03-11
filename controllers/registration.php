@@ -59,6 +59,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .error-message {
             color: red;
         }
+
+        body {
+            padding: 20px;
+            background-image: url('../puzzle.png'); /* Add background image */
+            background-size: cover; /* Ensure the background image covers the entire screen */
+            background-size: 40%;
+        }
+
+        .container {
+    text-align: center; /* Center text within container */
+    background-color: rgba(255, 255, 255, 0.8); /* Set container background to white with semi-transparency */
+    padding: 20px; /* Add padding */
+    border-radius: 10px; /* Add some rounding to the corners */
+    max-width: 700px; /* Limit the width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
     </style>
 </head>
 <body>
@@ -106,15 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <button type="submit" class="btn btn-primary btn-block">Create Account</button>
             </form>
+            <p class="text-center m-3">Already have an account? <a href="login.php">Login</a> 
+    <p class="text-center m-3">Forgot Password <a href="forgot_password.php">Reset Password</a>
         </div>
     </div>
 </div>
-
-
-
-    <br>
-    <p class="text-center m-3">Already have an account? <a href="login.php">Login</a> 
-    <p class="text-center m-3">Forgot Password <a href="forgot_password.php">Reset Password</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

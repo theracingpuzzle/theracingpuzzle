@@ -76,13 +76,22 @@ exit(); // Ensure that script execution stops after redirection
         .error {
             color: red;
         }
+        .container {
+    text-align: center; /* Center text within container */
+    background-color: rgba(255, 255, 255, 0.8); /* Set container background to white with semi-transparency */
+    padding: 20px; /* Add padding */
+    border-radius: 10px; /* Add some rounding to the corners */
+    max-width: 700px; /* Limit the width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+}
         
     </style>
 </head>
 <body>
-    <h2 class="text-center">Login</h2>
+
 
     <div class="container">
+    <h2 class="text-center">Login</h2>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form action="" method="POST" class="needs-validation" novalidate>
@@ -108,12 +117,12 @@ exit(); // Ensure that script execution stops after redirection
 
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
+                <p class="text-center mt-3">Don't have an account? <a href="registration.php">Create Account</a> 
+    <p class="text-center mt-3">Forgotten Password? <a href="forgot_password.php">Reset Password</a></p>
             </div>
         </div>
     </div>
 
-    <p class="text-center mt-3">Don't have an account? <a href="registration.php">Create Account</a> 
-    <p class="text-center mt-3">Forgotten Password? <a href="forgot_password.php">Reset Password</a></p>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

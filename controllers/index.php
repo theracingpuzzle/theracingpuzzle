@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>The Racing Hub</title>
+<title>The Racing Puzzle</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -29,7 +29,7 @@ body, html {
 
 .container {
     text-align: center; /* Center text within container */
-    background-color: rgba(255, 255, 255, 0.5); /* Set container background to white with semi-transparency */
+    background-color: rgba(255, 255, 255, 0.8); /* Set container background to white with semi-transparency */
     padding: 20px; /* Add padding */
     border-radius: 10px; /* Add some rounding to the corners */
 }
