@@ -7,24 +7,20 @@ if (session_status() === PHP_SESSION_NONE) {
 // Include database connection code
 include '../helpers/db_connection.php'; // Adjust the path as needed
 
-// Check if the user is logged in
-if(isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Racing Puzzle</title>
+    <title>Settings</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome-free-6.4.0-web/css/all.css">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <style>
-        
- body {
+         /* Your CSS styles */
+body {
     background-image: url('../puzzle.png'); /* Set the background image for the grass */
     background-color: #f0f0f0; /* Grey background color */
     background-size: 30%;
@@ -224,12 +220,24 @@ if(isset($_SESSION['user_id'])) {
     /* Add any other styles you want for the bars */
 }
 
+.footer {
+    background-color: #26334e; /* Set the background color */
+    color: white; /* Set the text color to white */
+    width: 100%; /* Make the footer stretch across the whole page */
+}
+
 .white-container {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+    margin: 0 auto; /* Center the container horizontally */
+    max-width: 500px; /* Set a maximum width for better readability */
 }
+
+
+
+
     </style>
 </head>
 
@@ -289,7 +297,7 @@ if(isset($_SESSION['user_id'])) {
                 <i class="fas fa-home"></i> <!-- Icon -->
                 <span class="title">Dashboard</span> <!-- Title -->
             </a>
-            <a href="trackertodb.php" class="active">
+            <a href="trackertodb.php">
             <i class="fa-solid fa-binoculars"></i> <!-- Icon -->
                 <span class="title">Tracker</span> <!-- Title -->
             </a>
@@ -301,6 +309,11 @@ if(isset($_SESSION['user_id'])) {
                 <i class="fas fa-trophy"></i> <!-- Icon -->
                 <span class="title">Leagues</span> <!-- Title -->
             </a>
+    <a href="settings.php" class="active">
+        <i class="fas fa-cog"></i> <!-- Icon -->
+        <span class="title">Settings</span> <!-- Title -->
+    </a>
+</div>
             <a href="#" class="dropdown-toggle" id="tools-dropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-tools"></i> <!-- Icon -->
@@ -327,229 +340,74 @@ if(isset($_SESSION['user_id'])) {
         </ul>
     </div>
 
-    <div class="container mt-4">
-    <div class="white-container">
-        <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#addHorseModal"><i class="fas fa-plus"></i> Add Horse</button>
-        <button class="btn btn-success" onclick="exportTableToCSV()"><i class="fas fa-download"></i> Export to CSV</button>
+    <!-- Content -->
+    <div class="content">
+        <!-- Your content here -->
+        <div class="white-container">
+            <h1>Settings</h1>
+            <h2>Edit Username</h2>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <label for="new_username">New Username:</label>
+                <input type="text" id="new_username" name="new_username">
+                <button type="submit">Update Username</button>
+            </form>
 
-        <div class="table-container">
-            <h1 class="mb-3">Horse Tracker</h1>
-            <table id="horse-table" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Horse</th>
-                        <th>Trainer</th>
-                        <th>Comments</th>
-                        <th>Last Run</th>
-                        <th>Next Run</th>
-                        <th>Options</th>
-                    </tr>
-                </thead>
-                <tbody id="horse-table-body">
-                    <!-- Data will be dynamically inserted here -->
-                </tbody>
-            </table>
-        </div>
+            <h2>Add Profile Image</h2>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+                <label for="profile_image">Profile Image:</label>
+                <input type="file" id="profile_image" name="profile_image">
+                <button type="submit">Upload Image</button>
+            </form>
 
-        <!-- Droppable area -->
-        <div id="droppable-area" class="hidden">
-            <!-- Information to be displayed -->
-            <p>This is some information about the selected horse.</p>
-        </div>
-    </div>
-</div>
-
-    
-    <!-- Add Horse Modal -->
-    <div class="modal fade" id="addHorseModal" tabindex="-1" role="dialog" aria-labelledby="addHorseModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addHorseModalLabel">Add Horse</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Add Horse Form -->
-                    <form id="addHorseForm">
-                        <div class="form-group">
-                            <label for="horseName">Horse Name:</label>
-                            <input type="text" class="form-control" id="horseName" name="horseName">
-                        </div>
-                        <div class="form-group">
-                            <label for="trainerName">Trainer Name:</label>
-                            <input type="text" class="form-control" id="trainerName" name="trainerName">
-                        </div>
-                        <div class="form-group">
-                            <label for="comment">Comment:</label>
-                            <input type="text" class="form-control" id="comment" name="comment">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addHorse()">Submit</button>
-                </div>
-            </div>
+            <h2>Set Preferences</h2>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <label for="preferences">Preferences:</label>
+                <input type="text" id="preferences" name="preferences" value="<?php echo $user_data['preferences']; ?>">
+                <button type="submit">Save Preferences</button>
+            </form>
+            <h2>Choose Your Preferences</h2>
+    <form action="update_preferences.php" method="post">
+        <label for="odds_format">Odds Format:</label>
+        <select name="odds_format" id="odds_format">
+            <option value="fractions">Fractions</option>
+            <option value="decimals">Decimals</option>
+        </select>
+        <br><br>
+        <label for="point_system">Point System:</label>
+        <select name="point_system" id="point_system">
+            <option value="default">Default</option>
+            <option value="points">Points</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Save Preferences">
+    </form>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<!-- Your footer content here -->
 
+</body>
+</html>
 
 <script>
-       // Function to toggle modal visibility when Add Horse button is clicked
-    document.querySelector('.btn-primary').addEventListener('click', function() {
-        $('#addHorseModal').modal('toggle');
-    });
-
-    // Function to fetch updated data and update the table
-    function updateTable() {
-        fetch('fetch_data.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch data (status code: ${response.status})`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Get a reference to the table body
-                const tableBody = document.getElementById('horse-table-body');
-
-                // Clear existing table rows
-                tableBody.innerHTML = '';
-
-                // Iterate over the fetched data and create table rows
-                data.forEach(row => {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td>${row.Horse}</td>
-                        <td>${row.Trainer}</td>
-                        <td>${row.Comment}</td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button class="btn btn-sm btn-primary" onclick="editRow(${row.id})"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRow(${row.id})"><i class="fas fa-trash"></i></button>
-                        </td>
-                    `;
-                    tableBody.appendChild(newRow);
-                });
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    }
-
-
-    function addHorse() {
-    // Get form data
-    const form = document.getElementById('addHorseForm');
-    const formData = new FormData(form);
-
-    // Send form data to PHP script for insertion
-    fetch('insert_data.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Failed to insert data (status code: ${response.status})`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Update the table with the new data
-        updateTable();
-
-        // Reset the form fields
-        form.reset();
-
-        // Manually trigger the click event on the close button of the modal
-        $('#addHorseModal').modal('hide');
-    })
-    .catch(error => console.error("Error inserting data:", error));
-}
-
-
-
-
-    // Call updateTable function initially to populate the table
-    updateTable();
-
-    document.addEventListener("DOMContentLoaded", function () {
-        var dropdown = document.querySelector('.dropdown');
-        dropdown.addEventListener('mouseenter', function () {
-            dropdown.querySelector('.dropdown-menu').style.display = 'block';
-        });
-        dropdown.addEventListener('mouseleave', function () {
-            dropdown.querySelector('.dropdown-menu').style.display = 'none';
-        });
-    });
-
-    // Function to edit a row
-function editRow(id) {
-    // Redirect or open a modal for editing based on the id
-    // For example, redirect to edit.php?id=id or open a modal with form fields populated with the data for editing
-    window.location.href = `edit_tracker.php?id=${id}`;
-}
-
-// Function to delete a row
-function deleteRow(id) {
-    // Confirm deletion with the user
-    if (confirm("Are you sure you want to delete this row?")) {
-        // Send an AJAX request to delete the row from the database
-        fetch(`delete.php?id=${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to delete row (status code: ${response.status})`);
-            }
-            // Remove the corresponding row from the HTML table
-            document.getElementById(`row-${id}`).remove();
-        })
-        .catch(error => console.error("Error deleting row:", error));
-    }
-}
-
-$(document).ready(function() {
-    // Event listener for table row click
-    $('#horse-table-body').on('click', 'tr', function() {
-        var horseId = $(this).data('horse-id');
-
-        // Check if droppable area already exists for this row
-        var droppableArea = $(this).next('.droppable-area');
-
-        // If droppable area already exists and belongs to the same horse, toggle its visibility
-        if (droppableArea.length && droppableArea.data('horse-id') === horseId) {
-            droppableArea.toggle();
-            return;
-        }
-
-        // Remove any existing droppable area before inserting a new one
-        $('.droppable-area').remove();
-
-        // Create droppable area HTML
-        var droppableHtml = '<tr class="droppable-area" data-horse-id="' + horseId + '">' +
-                                '<td colspan="3">' +
-                                    '<div class="droppable-content">' +
-                                        '<p>This is some information about the selected horse.</p>' +
-                                    '</div>' +
-                                '</td>' +
-                            '</tr>';
-
-        // Insert droppable area below the clicked row
-        $(this).after(droppableHtml);
-    });
-});
 
 document.getElementById('toggleSidebar').addEventListener('click', function () {
         document.getElementById('sidebar').classList.toggle('collapsed');
         document.getElementById('mainContent').classList.toggle('content-collapsed');
     });
-</script>
-</body>
-</html>
+
+     // JavaScript to toggle collapse of filters section
+     document.addEventListener('DOMContentLoaded', function () {
+        var showFiltersBtn = document.querySelector('[data-target="#filtersSection"]');
+        showFiltersBtn.addEventListener('click', function () {
+            var filtersSection = document.querySelector('#filtersSection');
+            if (filtersSection.classList.contains('show')) {
+                filtersSection.classList.remove('show');
+            } else {
+                filtersSection.classList.add('show');
+            }
+        });
+    });
+    </script>
+

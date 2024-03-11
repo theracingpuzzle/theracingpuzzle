@@ -1,40 +1,40 @@
 trigger:
   branches:
     include:
-      - main  # Adjust to your main branch name
+      - main  # Specify the branch to trigger the pipeline (e.g., main, master)
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-latest'  # Specify the agent pool to use for running the pipeline (e.g., Ubuntu, Windows)
 
-steps:
-- script: echo $(Build.SourcesDirectory)  # Add this script task to print the source directory
-  displayName: 'Print Source Directory'  # Optional display name for the task
+stages:
+- stage: Deploy
+  displayName: 'Deploy to Azure Web App'
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy job'
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'  # Path to the source code folder
+        Contents: '**'  # Copy all files and folders recursively
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Copy to the artifact staging directory
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'  # Copy all files from the source directory
-    Contents: '**/*'  # Include all files and folders recursively
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Copy to the staging directory
+    - task: AzureWebApp@1
+      displayName: 'Deploy to Azure Web App'
+      inputs:
+        azureSubscription: 'Azure Web App Service Connection'  # Use the name of your service connection
+        appName: 'theracingpuzzle'  # Name of the Azure Web App (theracingpuzzle)
+        package: '$(Build.ArtifactStagingDirectory)'  # Path to the artifacts to deploy
+        deployToSlotOrASE: true  # Set to true if deploying to a slot or App Service Environment (ASE)
+        ResourceGroupName: 'theracingpuzzle_group'  # Name of the Azure Resource Group (theracingpuzzle_group)
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/controllers'  # Explicitly include the controllers folder
-    Contents: '**/*'  # Include all files and folders recursively
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/controllers'  # Copy to the staging directory under controllers
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Publish the files from the staging directory as build artifacts
-    ArtifactName: 'drop'  # Name of the artifact
-    publishLocation: 'Container'  # Publish to Azure Pipelines artifacts
-
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'Azure Web App Service Connection'  # Specify the name of your Azure service connection
-    appName: 'theracingpuzzle'  # Specify the name of your Azure Web App
-    package: '$(Build.ArtifactStagingDirectory)'  # Specify the path to your application files
-    enableCustomDeployment: true
-    deploymentMethod: 'auto'
-
+    - task: AzureCLI@2
+      displayName: 'Update web.config for PHP'
+      inputs:
+        azureSubscription: 'Azure Web App Service Connection'  # Use the name of your service connection
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az webapp config appsettings set --name theracingpuzzle --resource-group theracingpuzzle_group --settings PHP_INI_SCAN_DIR=ini
 
 

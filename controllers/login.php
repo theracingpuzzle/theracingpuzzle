@@ -69,10 +69,14 @@ exit(); // Ensure that script execution stops after redirection
     <style>
         body {
             padding: 20px;
+            background-image: url('../puzzle.png'); /* Add background image */
+            background-size: cover; /* Ensure the background image covers the entire screen */
+            background-size: 40%;
         }
         .error {
             color: red;
         }
+        
     </style>
 </head>
 <body>

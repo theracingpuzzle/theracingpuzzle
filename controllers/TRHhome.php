@@ -7,45 +7,78 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <style>
-body,h1,p {font-family: "Raleway", sans-serif; color: black;}
-body, html {height: 100%}
-.bgimg {
-  background-image: url('newmarket.jpeg');
-  min-height: 100%;
-  background-position: center;
-  /* Adjust the background size to zoom out */
-  background-size: 100%;
+body, h1, p {
+    font-family: "Raleway", sans-serif;
+    color: black; /* Change font color to black */
 }
-/* Style for the "COMING SOON" heading */
-.coming-soon {
-  font-weight: bold;
-  text-shadow: 
-    2px 2px 0 white,   /* top-left */
-    -2px -2px 0 white,  /* top-right */
-    2px -2px 0 white,   /* bottom-left */
-    -2px 2px 0 white;   /* bottom-right */
+
+body, html {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+}
+
+.bgimg {
+    min-height: 100%;
+    background-image: url('../puzzle.png');
+    background-size: 40%;
+    background-position: center;
+    display: flex; /* Use flexbox for vertical and horizontal centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.container {
+    text-align: center; /* Center text within container */
+    background-color: rgba(255, 255, 255, 0.5); /* Set container background to white with semi-transparency */
+    padding: 20px; /* Add padding */
+    border-radius: 10px; /* Add some rounding to the corners */
+}
+
+.logo {
+    width: 200px; /* Set logo size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.buttons a {
+    margin: 10px; /* Add spacing between buttons */
+    background-color: black; /* Change button background color to black */
+    color: white; /* Change button text color to white */
+    border-radius: 20px; /* Round the buttons */
+    padding: 10px 20px; /* Add padding to the buttons */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
+}
+
+.buttons a:hover {
+    background-color: red !important; /* Change background color to red on hover */
+    color: white !important; /* Change text color to white on hover */
+}
+
+
+/* Make "Powered by DH" text black */
+.w3-display-bottomleft {
+    color: black; /* Change text color to black */
 }
 </style>
 </head>
 <body>
 
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-  <!-- Make the title black -->
-  <div class="w3-display-topleft w3-padding-large w3-xlarge" style="color: black;">
-    THE RACING HUB
+<div class="bgimg">
+  <div class="container">
+    <img src="../trp_logo.png" alt="Your Image" class="logo"> <!-- Apply logo class -->
+    <h1 class="w3-xlarge">THE RACING PUZZLE</h1>
+    <div class="buttons">
+      <a href="login.php" class="w3-button">Login</a> <!-- Remove w3-black class -->
+      <a href="registration.php" class="w3-button">Register</a> <!-- Remove w3-black class -->
+    </div>
   </div>
-  <div class="w3-display-middle">
-    <!-- Apply styles to the "COMING SOON" heading -->
-    <h1 class="w3-jumbo w3-animate-top coming-soon">COMING SOON</h1>
-    <hr class="w3-border-grey" style="margin:auto;width:40%">
-    <p class="w3-large w3-center">50 days left</p>
-  </div>
-  <!-- Make "Powered by DH" text black -->
-  <div class="w3-display-bottomleft w3-padding-large" style="color: black;">
+</div>
+
+<div class="w3-display-bottomleft w3-padding-large"> <!-- Adjust as needed -->
     Powered by <a href="" target="_blank">DH</a>
-  </div>
 </div>
 
 </body>
 </html>
+
+
 

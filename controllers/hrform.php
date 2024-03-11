@@ -211,20 +211,20 @@ if(isset($total_profit)) {
 
 <!-- Modal -->
 <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="formModalLabel">Add New Record</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" class="form-control" id="date" name="date" required>
-          </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formModalLabel">Add New Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="recordForm">
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
           <div class="form-group">
             <label for="racecourse">Racecourse:</label>
             <select class="form-control" id="racecourse" name="racecourse" required>
@@ -552,26 +552,28 @@ function sendDataToServer() {
 
     // Send form data to server
     fetch('insert_data_results.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Failed to insert data (status code: ${response.status})`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // If insertion is successful, update the table with new data
-        addRow(formData); // Add new row to table
-        calculateTotalProfit(); // Recalculate total profit
-        toggleFormVisibility(); // Hide the form after submission
-        form.submit(); // Manually submit the form
+    method: 'POST',
+    body: formData
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Failed to insert data (status code: ${response.status})`);
+    }
+    return response.json();
+})
+.then(data => {
+    // Log the server response
+    console.log(data);
 
-        // Close the modal after successful submission
-        $('#formModal').modal('hide');
-    })
-    .catch(error => console.error("Error inserting data:", error));
+    // If insertion is successful, update the table with new data
+    addRow(formData); // Add new row to table
+    calculateTotalProfit(); // Recalculate total profit
+    toggleFormVisibility(); // Hide the form after submission
+
+    // Close the modal after successful submission
+    $('#formModal').modal('hide');
+})
+.catch(error => console.error("Error inserting data:", error));
 }
 
 
@@ -597,6 +599,7 @@ function addRow(formData) {
     cells[8].textContent = formData.get('return');
     cells[9].textContent = formData.get('profit');
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
         var dropdown = document.querySelector('.dropdown');
