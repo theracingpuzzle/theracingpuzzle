@@ -67,8 +67,8 @@ body, html {
     <img src="../trp_logo.png" alt="Your Image" class="logo"> <!-- Apply logo class -->
     <h1 class="w3-xlarge">THE RACING PUZZLE</h1>
     <div class="buttons">
-      <a href="login.php" class="w3-button">Login</a> <!-- Remove w3-black class -->
-      <a href="registration.php" class="w3-button">Register</a> <!-- Remove w3-black class -->
+      <a href="../controllers/login.php" class="w3-button">Login</a> <!-- Remove w3-black class -->
+      <a href="../controllers/registration.php" class="w3-button">Register</a> <!-- Remove w3-black class -->
     </div>
   </div>
 </div>
