@@ -3,7 +3,7 @@ async function fetchData() {
     const options = {
         method: 'GET',
         url: 'https://horse-racing.p.rapidapi.com/racecards',
-        params: { date: '2024-03-11' },
+        params: { date: '2024-03-12' },
         headers: {
             'X-RapidAPI-Key': '05af7738fdmshb82b9d247e55d09p1b4ffejsnd7f4175f5c9b',
             'X-RapidAPI-Host': 'horse-racing.p.rapidapi.com'

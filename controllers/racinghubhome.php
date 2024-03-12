@@ -79,155 +79,168 @@ $timePeriod = isset($_GET['timePeriod']) ? $_GET['timePeriod'] : 'today'; // Get
     <link rel="stylesheet" href="../fontawesome-free-6.4.0-web/css/all.css">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <style>
-   /* Your CSS styles */
-body {
-    background-image: url('../puzzle.png');
-    background-color: #f0f0f0;
-    background-size: 30%;
-    margin: 0; /* Reset default margin */
-    padding: 0; /* Reset default padding */
-}
+        /* Your CSS styles */
+        body {
+            background-image: url('../puzzle.png');
+            background-color: #f0f0f0;
+            background-size: 30%;
+            margin: 0; /* Reset default margin */
+            padding: 0; /* Reset default padding */
+        }
 
-/* Header styles */
-.header {
-    background-image: url('../grass.jpeg');
-    background-size: 10%;
-    background-color: #26334e;
-    color: white;
-    padding: 20px 0; /* Add padding top and bottom */
-}
+        /* Header styles */
+        .header {
+            background-image: url('../grass.jpeg');
+            background-size: 10%;
+            background-color: #26334e;
+            color: white;
+            padding: 20px 0; /* Add padding top and bottom */
+        }
 
-.header .container {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Align items evenly */
-    align-items: center; /* Align items vertically */
-    padding: 20px; /* Add padding to the sides */
-}
+        .header .container {
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Align items evenly */
+            align-items: center; /* Align items vertically */
+            padding: 20px; /* Add padding to the sides */
+        }
 
-.toggle-btn {
-    color: white;
-}
+        .toggle-btn {
+            color: white;
+        }
 
-.logout-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: white;
-    border: 5px solid red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .logout-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: 5px solid red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.logout-icon i {
-    color: black; /* Adjust icon color */
-}
+        .logout-icon i {
+            color: black; /* Adjust icon color */
+        }
 
-/* Rolling bar */
-.rolling-bar {
-    overflow: hidden;
-    white-space: nowrap;
-    background-color: #26334e;
-    color: #ede2c9;
-    padding: 10px;
-    position: relative; /* Use relative position */
-    z-index: -1; /* Move behind other content */
-    border: 1px solid white;
-    border-radius: 5px;
-}
+        /* Rolling bar */
+        .rolling-bar {
+            overflow: hidden;
+            white-space: nowrap;
+            background-color: #26334e;
+            color: #ede2c9;
+            padding: 10px;
+            position: relative; /* Use relative position */
+            z-index: -1; /* Move behind other content */
+            border: 1px solid white;
+            border-radius: 5px;
+        }
 
-#rolling-content {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    animation: roll 30s linear infinite;
-    display: inline-block;
-}
+        #rolling-content {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            animation: roll 30s linear infinite;
+            display: inline-block;
+        }
 
-#rolling-content li {
-    display: inline-block;
-    padding-right: 20px;
-}
+        #rolling-content li {
+            display: inline-block;
+            padding-right: 20px;
+        }
 
-@keyframes roll {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
+        @keyframes roll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
-/* Content styles */
-.content {
-    padding: 20px;
-}
 
-/* Sidebar styles */
-.sidebar {
-    background-color: white;
-    border-right: 2px solid #26334e;
-    color: #26334e;
-    height: 100vh; /* Use viewport height */
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 20px;
-    transition: width 0.3s; /* Add transition for smooth effect */
-}
+        /* Sidebar styles */
+        .sidebar {
+            background-color: white;
+            border-right: 2px solid #26334e;
+            color: #26334e;
+            height: 100vh; /* Use viewport height */
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            transition: all 0.3s; /* Add transition for smooth effect */
+            z-index: 1; /* Ensure sidebar is above other content */
+        }
 
-.sidebar.collapsed {
-    width: 80px;
-}
+        .sidebar.collapsed {
+            width: 80px;
+            overflow-x:hidden;
+        }
 
-.sidebar #sidebarTitle {
-    display: block;
-}
+        .sidebar #sidebarTitle {
+            display: block;
+        }
 
-.sidebar a {
-    padding: 15px 10px;
-    text-decoration: none;
-    color: #26334e;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-}
+        .sidebar a {
+            padding: 15px 10px;
+            text-decoration: none;
+            color: #26334e;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
 
-.sidebar.collapsed a {
-    justify-content: center; /* Center content horizontally when collapsed */
-}
+        .sidebar.collapsed a {
+            justify-content: center; /* Center content horizontally when collapsed */
+        }
 
-.sidebar a i {
-    margin-right: 10px;
-}
+        .sidebar a i {
+            margin-right: 10px;
+        }
 
-.sidebar a .title {
-    display: block;
-}
+        .sidebar a .title {
+            display: block;
+        }
 
-.sidebar.collapsed a .title {
-    display: none;
-}
+        .sidebar.collapsed a .title {
+            display: none;
+        }
 
-.sidebar a:hover {
-    background-color: #edf2f7;
-}
+        .sidebar.collapsed a i {
+            margin-right: 0; /* Remove margin when collapsed */
+        }
 
-.sidebar .active {
-    background-color: #edf2f7;
-}
+        .sidebar a:hover {
+            background-color: #edf2f7;
+        }
 
-/* Footer styles */
-.footer {
-    background-color: #26334e;
-    color: white;
-    width: 100%;
-    padding: 20px 0; /* Add padding top and bottom */
-}
+        .sidebar .active {
+            background-color: #edf2f7;
+        }
 
-/* Additional styles */
-.title {
-    display: block;
-}
+        /* Content styles */
+        .content {
+            padding: 20px;
+            margin-left: 250px; /* Adjusted margin-left */
+            transition: margin-left 0.3s; /* Add transition for smooth effect */
+            z-index: 0; /* Ensure content is behind sidebar */
+        }
 
+        /* Footer styles */
+        .footer {
+            background-color: #26334e;
+            color: white;
+            width: 100%;
+            padding: 20px 0; /* Add padding top and bottom */
+        }
+
+        /* Additional styles */
+        .title {
+            display: block;
+        }
+
+        .custom-card-orange {
+            z-index: 0; /* Ensure cards are behind sidebar */
+        }
 
     </style>
 </head>
@@ -336,8 +349,6 @@ body {
             </div>
         </div>
     </div>
-
-
 
     <!-- Main Content -->
     <div class="content" id="mainContent">
